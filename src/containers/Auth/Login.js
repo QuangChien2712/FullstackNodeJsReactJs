@@ -11,6 +11,7 @@ class Login extends Component {
         this.state = {
             username: "",
             password: "",
+            isShowPassword: false,
         };
     }
 
@@ -34,6 +35,12 @@ class Login extends Component {
             this.state.password
         );
         console.log(this.state);
+    };
+
+    handleShowHidePassword = () => {
+        this.setState({
+            isShowPassword: !this.state.isShowPassword,
+        });
     };
 
     render() {
@@ -64,7 +71,7 @@ class Login extends Component {
             label > Password: < /label>{" "} <
             div className = "custom-input-password" >
             <
-            input type = "password"
+            input type = { this.state.isShowPassword ? "text" : "password" }
             className = "form-control"
             placeholder = "Enter your Password"
             onChange = {
@@ -74,7 +81,21 @@ class Login extends Component {
             }
             value = { this.state.password }
             />{" "} <
-            i className = "far fa-eye" > < /i>{" "} <
+            span >
+            <
+            i className = {
+                this.state.isShowPassword ?
+                "far fa-eye" :
+                    "far fa-eye-slash"
+            }
+            onClick = {
+                () => {
+                    this.handleShowHidePassword();
+                }
+            } >
+            { " " } <
+            /i>{" "} <
+            /span>{" "} <
             /div>{" "} <
             /div>{" "} <
             div className = "col-12" >
