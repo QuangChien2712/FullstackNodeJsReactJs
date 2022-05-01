@@ -47,26 +47,22 @@ class App extends Component {
             <
             div className = "main-container" >
             <
-            ConfirmModal / > { this.props.isLoggedIn && < Header / > }
-
-            <
+            ConfirmModal / > { this.props.isLoggedIn && < Header / > } <
             span className = "content-container" >
             <
             Switch >
             <
             Route path = { path.HOME }
             exact component = { Home }
-            /> <
+            />{" "} <
             Route path = { path.LOGIN }
             component = { userIsNotAuthenticated(Login) }
-            /> <
+            />{" "} <
             Route path = { path.SYSTEM }
             component = { userIsAuthenticated(System) }
-            /> <
-            /Switch> <
-            /span>
-
-            <
+            />{" "} <
+            /Switch>{" "} <
+            /span> <
             ToastContainer className = "toast-container"
             toastClassName = "toast-item"
             bodyClassName = "toast-item-body"
@@ -77,9 +73,9 @@ class App extends Component {
             closeOnClick = { false }
             draggable = { false }
             closeButton = { < CustomToastCloseButton / > }
-            /> <
-            /div> <
-            /Router> <
+            />{" "} <
+            /div>{" "} <
+            /Router>{" "} <
             /Fragment>
         );
     }
@@ -88,7 +84,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
     return {
         started: state.app.started,
-        isLoggedIn: state.admin.isLoggedIn,
+        isLoggedIn: state.user.isLoggedIn,
     };
 };
 
