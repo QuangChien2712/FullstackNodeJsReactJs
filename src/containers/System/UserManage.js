@@ -3,17 +3,18 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./UserManage.scss";
 import { getAllUsers } from "../../services/userService";
+import ModalUser from "./ModalUser";
 class UserManage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             arrUsers: [],
+            isOpenModalUser: false,
         };
     }
 
     async componentDidMount() {
         let response = await (await getAllUsers("All")).data;
-        console.log("chien2 ", response);
         if (response && response.errCode === 0) {
             this.setState({
                 arrUsers: response.users,
@@ -21,23 +22,52 @@ class UserManage extends Component {
         }
     }
 
+    handleAddNewUser = () => {
+        this.setState({
+            isOpenModalUser: true,
+        });
+    };
+
+    toggleModalUser = () => {
+        this.setState({
+            isOpenModalUser: !this.state.isOpenModalUser,
+        });
+    };
+
     render() {
         let arrUsers = this.state.arrUsers;
-        console.log("chien ", arrUsers);
+
         return ( <
             >
             <
+            div className = "" >
+            <
+            ModalUser isOpen = { this.state.isOpenModalUser }
+            toggleFormParent = { this.toggleModalUser }
+            />{" "} <
             div className = "text-center" >
             <
-            h1 > All Users < /h1> <
+            h1 > All Users < /h1>{" "} <
+            /div>{" "} <
+            div className = "mx-1" >
+            <
+            button className = "btn btn-primary px-3"
+            onClick = {
+                () => this.handleAddNewUser() } >
+            <
+            i className = "fas fa-plus" > < /i> Add new User{" "} <
+            /button>{" "} <
+            /div>{" "} <
+            div >
+            <
             table id = "customers" >
             <
             tr >
             <
-            th > Email < /th> <th> First name </th > < th > Last name < /th> <
+            th > Email < /th> <th> First name </th > < th > Last name < /th>{" "} <
             th > Address < /th> <th> Actions </th >
             <
-            /tr> {
+            /tr>{" "} {
                 arrUsers &&
                     arrUsers.length > 0 &&
                     arrUsers.map((item, index) => {
@@ -52,19 +82,20 @@ class UserManage extends Component {
                             <
                             button className = "btn-edit" >
                             <
-                            i className = "fas fa-pencil-alt" > < /i> <
-                            /button> <
+                            i className = "fas fa-pencil-alt" > < /i>{" "} <
+                            /button>{" "} <
                             button className = "btn-delete" >
                             <
-                            i className = "fas fa-trash" > < /i> <
-                            /button> <
-                            /td> <
+                            i className = "fas fa-trash" > < /i>{" "} <
+                            /button>{" "} <
+                            /td>{" "} <
                             /tr>
                         );
                     })
-            } <
-            /table> <
-            /div> <
+            } { " " } <
+            /table>{" "} <
+            /div>{" "} <
+            /div>{" "} <
             />
         );
     }
