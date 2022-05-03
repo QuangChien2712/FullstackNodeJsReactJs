@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./UserManage.scss";
-import { getAllUsers } from "../../services/userService";
+import { getAllUsers, createNewUserService } from "../../services/userService";
 import ModalUser from "./ModalUser";
 class UserManage extends Component {
     constructor(props) {
@@ -14,13 +14,17 @@ class UserManage extends Component {
     }
 
     async componentDidMount() {
+        await this.getAllUsersFromReact();
+    }
+
+    getAllUsersFromReact = async() => {
         let response = await (await getAllUsers("All")).data;
         if (response && response.errCode === 0) {
             this.setState({
                 arrUsers: response.users,
             });
         }
-    }
+    };
 
     handleAddNewUser = () => {
         this.setState({
@@ -34,6 +38,23 @@ class UserManage extends Component {
         });
     };
 
+    createNewUser = async(data) => {
+        try {
+            let responseData = await createNewUserService(data);
+            let response = responseData.data;
+            if (response && response.errCode !== 0) {
+                alert(response.errMessage);
+            } else {
+                this.setState({
+                    isOpenModalUser: false,
+                });
+                await this.getAllUsersFromReact();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     render() {
         let arrUsers = this.state.arrUsers;
 
@@ -44,6 +65,7 @@ class UserManage extends Component {
             <
             ModalUser isOpen = { this.state.isOpenModalUser }
             toggleFormParent = { this.toggleModalUser }
+            createNewUser = { this.createNewUser }
             />{" "} <
             div className = "text-center" >
             <
@@ -61,6 +83,8 @@ class UserManage extends Component {
             div >
             <
             table id = "customers" >
+            <
+            tbody >
             <
             tr >
             <
@@ -93,6 +117,7 @@ class UserManage extends Component {
                         );
                     })
             } { " " } <
+            /tbody>{" "} <
             /table>{" "} <
             /div>{" "} <
             /div>{" "} <

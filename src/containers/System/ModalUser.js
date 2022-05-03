@@ -18,7 +18,13 @@ import {
 class ModalUser extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            email: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+            address: "",
+        };
     }
 
     componentDidMount() {}
@@ -27,8 +33,35 @@ class ModalUser extends Component {
         this.props.toggleFormParent();
     };
 
+    handleOnChangeInput = (event, id) => {
+        let copyState = {...this.state };
+        copyState[id] = event.target.value;
+        this.setState({
+            ...copyState,
+        });
+    };
+
+    checkValideInput = () => {
+        let isValid = true;
+        let arrInput = ["email", "password", "firstName", "lastName", "address"];
+        for (let i = 0; i < arrInput.length; i++) {
+            if (!this.state[arrInput[i]]) {
+                isValid = false;
+                alert("Missing parametter: " + arrInput[i]);
+                break;
+            }
+        }
+        return isValid;
+    };
+
+    handleAddNewUser = () => {
+        let isValid = this.checkValideInput();
+        if (isValid === true) {
+            this.props.createNewUser(this.state);
+        }
+    };
+
     render() {
-        console.log("Props is: ", this.props);
         return ( <
             div className = "text-center" >
             <
@@ -59,9 +92,13 @@ class ModalUser extends Component {
             Label
             for = "exampleEmail" > Email < /Label>{" "} <
             Input id = "exampleEmail"
-            name = "email"
-            placeholder = ""
-            type = "email" /
+            value = { this.state.email }
+            onChange = {
+                (event) => {
+                    this.handleOnChangeInput(event, "email");
+                }
+            }
+            type = "text" /
             >
             <
             /FormGroup>{" "} <
@@ -73,8 +110,12 @@ class ModalUser extends Component {
             Label
             for = "examplePassword" > Password < /Label>{" "} <
             Input id = "examplePassword"
-            name = "password"
-            placeholder = ""
+            value = { this.state.password }
+            onChange = {
+                (event) => {
+                    this.handleOnChangeInput(event, "password");
+                }
+            }
             type = "password" /
             >
             <
@@ -88,10 +129,14 @@ class ModalUser extends Component {
             FormGroup >
             <
             Label
-            for = "exampleFirstName" > FirstName < /Label>{" "} <
-            Input id = "exampleFirstName"
-            name = "firstname"
-            placeholder = ""
+            for = "examplefirstName" > FirstName < /Label>{" "} <
+            Input id = "examplefirstName"
+            value = { this.state.firstName }
+            onChange = {
+                (event) => {
+                    this.handleOnChangeInput(event, "firstName");
+                }
+            }
             type = "text" /
             >
             <
@@ -102,10 +147,14 @@ class ModalUser extends Component {
             FormGroup >
             <
             Label
-            for = "exampleLastName" > LastName < /Label>{" "} <
-            Input id = "exampleLastName"
-            name = "lastname"
-            placeholder = ""
+            for = "examplelastName" > LastName < /Label>{" "} <
+            Input id = "examplelastName"
+            value = { this.state.lastName }
+            onChange = {
+                (event) => {
+                    this.handleOnChangeInput(event, "lastName");
+                }
+            }
             type = "text" /
             >
             <
@@ -117,9 +166,13 @@ class ModalUser extends Component {
             Label
             for = "exampleAddress" > Address < /Label>{" "} <
             Input id = "exampleAddress"
-            name = "address"
-            placeholder = "" / >
-            <
+            value = { this.state.address }
+            onChange = {
+                (event) => {
+                    this.handleOnChangeInput(event, "address");
+                }
+            }
+            />{" "} <
             /FormGroup>{" "} <
             /Form>{" "} <
             /ModalBody>{" "} <
@@ -127,8 +180,11 @@ class ModalUser extends Component {
             <
             Button color = "primary"
             onClick = {
-                function noRefCheck() {} } >
-            Save changes { " " } <
+                () => {
+                    this.handleAddNewUser();
+                }
+            } >
+            Add New { " " } <
             /Button>{" "} <
             Button onClick = {
                 function noRefCheck() {} } > Cancel < /Button>{" "} <
