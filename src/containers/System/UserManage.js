@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./UserManage.scss";
-import { getAllUsers, createNewUserService } from "../../services/userService";
+import {
+    getAllUsers,
+    createNewUserService,
+    deleteUserService,
+} from "../../services/userService";
 import ModalUser from "./ModalUser";
 class UserManage extends Component {
     constructor(props) {
@@ -49,6 +53,19 @@ class UserManage extends Component {
                     isOpenModalUser: false,
                 });
                 await this.getAllUsersFromReact();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    handleDeleteUser = async(user) => {
+        try {
+            let response = await (await deleteUserService(user.id)).data;
+            if (response && response.errCode === 0) {
+                await this.getAllUsersFromReact();
+            } else {
+                alert(response.errMessage);
             }
         } catch (error) {
             console.log(error);
@@ -108,7 +125,12 @@ class UserManage extends Component {
                             <
                             i className = "fas fa-pencil-alt" > < /i>{" "} <
                             /button>{" "} <
-                            button className = "btn-delete" >
+                            button className = "btn-delete"
+                            onClick = {
+                                () => {
+                                    this.handleDeleteUser(item);
+                                }
+                            } >
                             <
                             i className = "fas fa-trash" > < /i>{" "} <
                             /button>{" "} <
