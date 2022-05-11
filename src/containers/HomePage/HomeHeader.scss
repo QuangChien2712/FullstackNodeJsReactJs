@@ -60,15 +60,29 @@
                 }
                 .language-vi {
                     cursor: pointer;
-                    &.active {
-                        color: orange;
+                    opacity: 0.2;
+                    &:active {
+                        opacity: 1;
+                        span {
+                            color: orange;
+                        }
+                    }
+                    &:hover {
+                        opacity: 0.8;
                     }
                 }
                 .language-en {
                     padding: 0 5px;
                     cursor: pointer;
-                    &.active {
-                        color: blue;
+                    opacity: 0.2;
+                    &:active {
+                        opacity: 2;
+                        span {
+                            color: red;
+                        }
+                    }
+                    &:hover {
+                        opacity: 0.8;
                     }
                 }
             }
