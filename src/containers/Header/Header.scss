@@ -1,5 +1,4 @@
 @import "../../styles/common.scss";
-
 .header-container {
     z-index: 99;
     display: flex;
@@ -18,6 +17,26 @@
         }
         i {
             font-size: $base-size + 1px;
+        }
+    }
+    .languages {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        align-items: center;
+        .language-en {
+            padding: 2px 5px;
+            cursor: pointer;
+            &.active {
+                opacity: 1;
+            }
+        }
+        .language-vi {
+            padding: 2px 5px;
+            cursor: pointer;
+            &.active {
+                opacity: 1;
+            }
         }
     }
 }
