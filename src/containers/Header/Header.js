@@ -5,6 +5,7 @@ import * as actions from "../../store/actions";
 import Navigator from "../../components/Navigator";
 import { adminMenu } from "./menuApp";
 import { LANGUAGES } from "../../utils";
+import { FormattedMessage } from "react-intl";
 import "./Header.scss";
 
 class Header extends Component {
@@ -12,7 +13,8 @@ class Header extends Component {
     this.props.handleChangeAppRedux(language);
   };
   render() {
-    const { processLogout, language } = this.props;
+    const { processLogout, language, userInfo } = this.props;
+    console.log("Thông tin User: ", userInfo);
 
     return (
       <div className="header-container">
@@ -22,6 +24,13 @@ class Header extends Component {
           <Navigator menus={adminMenu} />{" "}
         </div>{" "}
         <div className="languages">
+          <span className="welcome">
+            <FormattedMessage id="homeheader.welcome" />
+            {userInfo && userInfo.firstName
+              ? userInfo.firstName + " " + userInfo.lastName
+              : " "}{" "}
+            !
+          </span>
           <div>
             <span
               className={
@@ -58,6 +67,7 @@ const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
+    userInfo: state.user.userInfo,
   };
 };
 
