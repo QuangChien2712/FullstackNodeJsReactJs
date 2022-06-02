@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { LANGUAGES } from "../../../utils";
 import { getAllcodeService } from "../../../services/userService";
-
+import * as actions from "../../../store/actions";
 class UserRedux extends Component {
   constructor(props) {
     super(props);
@@ -15,27 +15,36 @@ class UserRedux extends Component {
   }
 
   async componentDidMount() {
-    try {
-      let resGender = (await getAllcodeService("gender")).data;
-      let resPosition = (await getAllcodeService("position")).data;
-      let resRole = (await getAllcodeService("role")).data;
-      if (
-        resGender &&
-        resGender.errCode === 0 &&
-        resPosition &&
-        resPosition.errCode === 0 &&
-        resRole &&
-        resRole.errCode === 0
-      ) {
-        this.setState({
-          genderArr: resGender.data,
-          positionArr: resPosition.data,
-          roleArr: resRole.data,
-        });
-      }
-      console.log("Data api allcode: ", resGender);
-    } catch (error) {
-      console.log(error);
+    this.props.getGenderStart();
+    // try {
+    //   let resGender = (await getAllcodeService("gender")).data;
+    //   let resPosition = (await getAllcodeService("position")).data;
+    //   let resRole = (await getAllcodeService("role")).data;
+    //   if (
+    //     resGender &&
+    //     resGender.errCode === 0 &&
+    //     resPosition &&
+    //     resPosition.errCode === 0 &&
+    //     resRole &&
+    //     resRole.errCode === 0
+    //   ) {
+    //     this.setState({
+    //       genderArr: resGender.data,
+    //       positionArr: resPosition.data,
+    //       roleArr: resRole.data,
+    //     });
+    //   }
+    //   console.log("Data api allcode: ", resGender);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.genderRedux !== this.props.genderRedux) {
+      this.setState({
+        genderArr: this.props.genderRedux,
+      });
     }
   }
 
@@ -180,11 +189,14 @@ class UserRedux extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
+    genderRedux: state.admin.genders,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    getGenderStart: () => dispatch(actions.fetchGenderStart()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserRedux);
