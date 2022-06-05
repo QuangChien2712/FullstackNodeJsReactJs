@@ -1,5 +1,8 @@
 import actionTypes from "./actionTypes";
-import { getAllcodeService } from "../../services/userService";
+import {
+  getAllcodeService,
+  createNewUserService,
+} from "../../services/userService";
 
 export const fetchGenderStart = () => {
   return async (dispatch, getState) => {
@@ -58,7 +61,7 @@ export const fetchGenderSuccess = (genderData) => ({
 });
 
 export const fetchGenderFailed = () => ({
-  type: actionTypes.FETCH_GENDER_FAIDED,
+  type: actionTypes.FETCH_GENDER_FAILDED,
 });
 
 export const fetchPositionSuccess = (positionData) => ({
@@ -67,7 +70,7 @@ export const fetchPositionSuccess = (positionData) => ({
 });
 
 export const fetchPositionFailed = () => ({
-  type: actionTypes.FETCH_POSITION_FAIDED,
+  type: actionTypes.FETCH_POSITION_FAILDED,
 });
 
 export const fetchRoleSuccess = (roleData) => ({
@@ -76,17 +79,22 @@ export const fetchRoleSuccess = (roleData) => ({
 });
 
 export const fetchRoleFailed = () => ({
-  type: actionTypes.FETCH_ROLE_FAIDED,
+  type: actionTypes.FETCH_ROLE_FAILDED,
 });
-// export const adminLoginSuccess = (adminInfo) => ({
-//     type: actionTypes.ADMIN_LOGIN_SUCCESS,
-//     adminInfo: adminInfo
-// })
 
-// export const adminLoginFail = () => ({
-//     type: actionTypes.ADMIN_LOGIN_FAIL
-// })
-
-// export const processLogout = () => ({
-//     type: actionTypes.PROCESS_LOGOUT
-// })
+export const createNewUser = (data) => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await createNewUserService(data);
+      console.log("Chien check create user redux: ", res);
+      // if (res && res.errCode === 0) {
+      //   dispatch(saveUserSuccess());
+      // } else {
+      //   dispatch(saveUserFailded());
+      // }
+    } catch (error) {
+      // dispatch(saveUserFailded());
+      console.log("saveUserFailded error: ", error);
+    }
+  };
+};
