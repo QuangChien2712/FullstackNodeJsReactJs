@@ -5,6 +5,7 @@ const initialState = {
   genders: [],
   roles: [],
   positions: [],
+  users: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -13,26 +14,17 @@ const adminReducer = (state = initialState, action) => {
       let copyState = { ...state };
       copyState.isLoadingGender = true;
       return { ...copyState };
-    // console.log("Chien fetch gender start: ", action);
-    // return {
-    //   ...state,
-    // };
+
     case actionTypes.FETCH_GENDER_SUCCESS:
       state.genders = action.data;
       state.isLoadingGender = false;
       return {
         ...state,
       };
-    // let copyState = { ...state };
-    // copyState.genders = action.data;
-    // console.log("Chien fetch gender success: ", copyState);
-    // return {
-    //   ...copyState,
-    // };
+
     case actionTypes.FETCH_GENDER_FAILDED:
       state.isLoadingGender = false;
       state.genders = [];
-      // console.log("Chien fetch gender FAILDED: ", action);
       return {
         ...state,
       };
@@ -60,6 +52,19 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
+    case actionTypes.FETCH_ALL_USERS_SUCCESS:
+      state.users = action.users;
+      return {
+        ...state,
+      };
+
+    case actionTypes.FETCH_ALL_USERS_FAILDED:
+      state.users = [];
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }
