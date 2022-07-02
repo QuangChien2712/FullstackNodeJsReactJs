@@ -46,14 +46,14 @@ class UserRedux extends Component {
       let arrGenders = this.props.genderRedux;
       this.setState({
         genderArr: arrGenders,
-        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : "",
+        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : "",
       });
     }
     if (prevProps.roleRedux !== this.props.roleRedux) {
       let arrRoles = this.props.roleRedux;
       this.setState({
         roleArr: arrRoles,
-        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : "",
+        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
       });
     }
     if (prevProps.positionRedux !== this.props.positionRedux) {
@@ -61,7 +61,7 @@ class UserRedux extends Component {
       this.setState({
         positionArr: arrPositions,
         position:
-          arrPositions && arrPositions.length > 0 ? arrPositions[0].key : "",
+          arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : "",
       });
     }
 
@@ -76,10 +76,10 @@ class UserRedux extends Component {
         lastName: "",
         phoneNumber: "",
         address: "",
-        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : "",
+        gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : "",
         position:
-          arrPositions && arrPositions.length > 0 ? arrPositions[0].key : "",
-        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : "",
+          arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : "",
+        role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : "",
         avatar: "",
         action: CRUD_ACTIONS.CREATE,
         previewImgURL: "",
@@ -224,7 +224,7 @@ class UserRedux extends Component {
               <div className="col-12">
                 {isGetGenders === true ? "Loading genders..." : ""}
               </div>
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <div className="col-3">
                   {" "}
                   <label>
@@ -235,7 +235,7 @@ class UserRedux extends Component {
                       this.state.action === CRUD_ACTIONS.EDIT ? true : false
                     }
                     type="email"
-                    class="form-control"
+                    className="form-control"
                     value={email}
                     onChange={(event) => {
                       this.onChangeInput(event, "email");
@@ -252,7 +252,7 @@ class UserRedux extends Component {
                       this.state.action === CRUD_ACTIONS.EDIT ? true : false
                     }
                     type="password"
-                    class="form-control"
+                    className="form-control"
                     value={password}
                     onChange={(event) => {
                       this.onChangeInput(event, "password");
@@ -266,7 +266,7 @@ class UserRedux extends Component {
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={firstName}
                     onChange={(event) => {
                       this.onChangeInput(event, "firstName");
@@ -279,7 +279,7 @@ class UserRedux extends Component {
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={lastName}
                     onChange={(event) => {
                       this.onChangeInput(event, "lastName");
@@ -287,7 +287,7 @@ class UserRedux extends Component {
                   />
                 </div>
               </div>
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <div className="col-3 ">
                   {" "}
                   <label>
@@ -295,7 +295,7 @@ class UserRedux extends Component {
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={phoneNumber}
                     onChange={(event) => {
                       this.onChangeInput(event, "phoneNumber");
@@ -308,7 +308,7 @@ class UserRedux extends Component {
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     value={address}
                     onChange={(event) => {
                       this.onChangeInput(event, "address");
@@ -316,7 +316,7 @@ class UserRedux extends Component {
                   />
                 </div>
               </div>
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <div className="col-3 ">
                   {" "}
                   <label>
@@ -333,7 +333,7 @@ class UserRedux extends Component {
                       genders.length > 0 &&
                       genders.map((item, index) => {
                         return (
-                          <option key={index} value={item.key}>
+                          <option key={index} value={item.keyMap}>
                             {language === LANGUAGES.VI
                               ? item.valueVi
                               : item.valueEn}
@@ -358,7 +358,7 @@ class UserRedux extends Component {
                       positions.length > 0 &&
                       positions.map((item, index) => {
                         return (
-                          <option key={index} value={item.key}>
+                          <option key={index} value={item.keyMap}>
                             {language === LANGUAGES.VI
                               ? item.valueVi
                               : item.valueEn}
@@ -383,7 +383,7 @@ class UserRedux extends Component {
                       roles.length > 0 &&
                       roles.map((item, index) => {
                         return (
-                          <option key={index} value={item.key}>
+                          <option key={index} value={item.keyMap}>
                             {language === LANGUAGES.VI
                               ? item.valueVi
                               : item.valueEn}
@@ -416,7 +416,7 @@ class UserRedux extends Component {
                   </div>
                 </div>
               </div>
-              <div class="input-group my-3">
+              <div className="input-group my-3">
                 <button
                   type="submit"
                   className={
