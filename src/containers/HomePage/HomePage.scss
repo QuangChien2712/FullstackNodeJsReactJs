@@ -39,6 +39,10 @@
     }
 }
 
+.slick-disabled {
+    display: none !important;
+}
+
 .section-share {
     height: 330px;
     // border: 1px solid red;
@@ -126,7 +130,8 @@
 }
 
 .slick-next {
-    left: 1285px !important;
+    // left: 1285px !important;
+    right: -20px !important;
     z-index: 1000 !important
 }
 
